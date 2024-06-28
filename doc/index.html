@@ -54,25 +54,69 @@ library approach by using simple input state for input and draw
 commands describing primitive shapes as output. So instead of providing a
 layered library that tries to abstract over a number of platform and
 render backends it only focuses on the actual UI.
-这是一个最小状态即时模式图形用户界面工具包，以 ANSI C 编写，并在公共领域获得许可。
-它被设计为应用程序的简单嵌入式用户界面，没有任何依赖项、默认渲染后端或操作系统窗口和输入处理，
+这是一个最小状态即时模式图形用户界面工具包, 以 ANSI C 编写, 并在公共领域获得许可。
+它被设计为应用程序的简单嵌入式用户界面, 没有任何依赖项、默认渲染后端或操作系统窗口和输入处理,
 而是通过使用简单的输入状态作为输入和描述原始形状的绘制命令作为输出来提供非常模块化的库方法。
-因此，它只关注实际的 UI, 而不是提供试图抽象多个平台和渲染后端的分层库。
+因此, 它只关注实际的 UI, 而不是提供试图抽象多个平台和渲染后端的分层库。
 
-## Highlights
+## Highlights 强调
 - Graphical user interface toolkit
+  图形用户交互界面工具包
 - Single header library
+  单头文件库
 - Written in C89 (a.k.a. ANSI C or ISO C90)
+  用C89(又名ANSI C或ISOC90)编写
 - Small codebase (~18kLOC)
+  小型代码库(~18kLOC) //LOC: Lines Of Code
 - Focus on portability, efficiency and simplicity
+  专注于便携性、效率和简单性
 - No dependencies (not even the standard library if not wanted)
+  没有依赖项(如果不需要, 甚至依赖标准库)
 - Fully skinnable and customizable
+  完全可换肤和可定制
 - Low memory footprint with total memory control if needed or wanted
+  低内存占用, 如果需要或想要, 可以控制总内存
 - UTF-8 support
+  UTF-8支持
 - No global or hidden state
+  没有全局或隐藏状态
 - Customizable library modules (you can compile and use only what you need)
+  可自定义的库模块(可以只编译使用自己需要的)
 - Optional font baker and vertex buffer output
+  可选的字体烘焙器和顶点缓冲区输出
 - [Code available on github](https://github.com/Immediate-Mode-UI/Nuklear/)
+  github上可用的代码(https://github.com/Immediate-Mode-UI/Nuklear/)
+/**
+Optional font baker and vertex buffer output怎么翻译和解释?
+
+ChatGPT
+"Optional font baker and vertex buffer output" 翻译成中文为 "可选的字体烘焙器和顶点缓冲区输出"。
+下面是对这两个概念的解释：
+
+可选的字体烘焙器 (Optional Font Baker)
+字体烘焙器是一个工具或功能, 用于将字体字符预处理成纹理图像, 这样在绘制文本时可以直接使用这些预处理后的纹理。
+这个过程通常包括以下步骤：
+字体渲染：将字体文件中的字符渲染为位图图像。
+纹理打包：将这些字符图像打包到一个或多个纹理中, 以便在渲染时高效使用。
+生成元数据: 创建字符的元数据(例如字符的UV坐标、偏移量等), 以便在绘制文本时正确定位和显示每个字符。
+
+这种预处理使得文本渲染更加高效, 因为可以避免在运行时频繁地生成字符图像。可选的意思是这个功能不是必须的,
+开发者可以根据需求选择是否使用它。
+
+顶点缓冲区输出 (Vertex Buffer Output)
+顶点缓冲区输出是指将图形渲染的顶点数据存储到一个缓冲区中, 这些数据通常包括顶点的位置、颜色、纹理坐标等。
+这个缓冲区用于GPU(图形处理单元)渲染图形时的输入。
+
+顶点数据生成：在渲染过程中生成需要绘制的顶点数据。
+存储到缓冲区: 将这些顶点数据存储到一个顶点缓冲区对象中, 以便于GPU访问和使用。
+绘制调用: 通过绘制调用将这些顶点数据发送到GPU, 以进行实际的图形渲染。
+
+顶点缓冲区输出使得图形渲染更加高效, 因为可以减少CPU和GPU之间的数据传输次数, 并且可以充分利用GPU的并行处理能力。
+
+总结起来, 这两个功能的引入是为了提高图形渲染的效率和性能。字体烘焙器通过预处理字体减少运行时的计算,
+而顶点缓冲区输出通过优化数据传输和处理提高渲染速度。
+*/
+
 ## Features
 - Absolutely no platform dependent code
 - Memory management control ranging from/to
