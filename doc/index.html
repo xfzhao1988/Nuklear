@@ -353,31 +353,39 @@ Should be used if you want complete control over nuklear's memory management.
 Especially recommended for system with little memory or systems with virtual memory.
 For the later case you can just allocate for example 16MB of virtual memory
 and only the required amount of memory will actually be committed.
+从单个固定大小的内存块初始化 nk_context 结构体 如果您想要完全控制 nuclear 的内存管理，
+则应使用此方法。特别推荐用于内存较少的系统或具有虚拟内存的系统。对于后一种情况，您可以仅分配例如 16MB 的虚拟内存，
+并且实际上只会提交所需的内存量。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 nk_bool nk_init_fixed(struct nk_context *ctx, void *memory, nk_size size, const struct nk_user_font *font);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! Warning
+!!! Warning 警告
     make sure the passed memory block is aligned correctly for `nk_draw_commands`.
+    确保传递的内存块与 nk_draw_commands 正确对齐。
 Parameter   | Description
 ------------|--------------------------------------------------------------
-__ctx__     | Must point to an either stack or heap allocated `nk_context` struct
-__memory__  | Must point to a previously allocated memory block
-__size__    | Must contain the total size of __memory__
-__font__    | Must point to a previously initialized font handle for more info look at font documentation
-Returns either `false(0)` on failure or `true(1)` on success.
+__ctx__     | Must point to an either stack or heap allocated `nk_context` struct<br />必须指向栈或堆分配的 nk_context 结构
+__memory__  | Must point to a previously allocated memory block<br />必须指向先前分配的内存块
+__size__    | Must contain the total size of __memory__<br />必须包含内存总大小
+__font__    | Must point to a previously initialized font handle for more info look at font documentation<br />必须指向先前初始化的字体句柄，有关更多信息，请查看字体文档
+Returns either `false(0)` on failure or `true(1)` on success.<br />失败时返回 false(0)，成功时返回 true(1)。
+
 #### nk_init
 Initializes a `nk_context` struct with memory allocation callbacks for nuklear to allocate
 memory from. Used internally for `nk_init_default` and provides a kitchen sink allocation
 interface to nuklear. Can be useful for cases like monitoring memory consumption.
+使用内存分配回调初始化 nk_context 结构，以便 nuklear 分配内存。内部用于 nk_init_default,
+并为 Nuklear 提供了一种综合的内存分配接口。这在需要监控内存消耗的场景中非常有用。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 nk_bool nk_init(struct nk_context *ctx, struct nk_allocator *alloc, const struct nk_user_font *font);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|---------------------------------------------------------------
-__ctx__     | Must point to an either stack or heap allocated `nk_context` struct
-__alloc__   | Must point to a previously allocated memory allocator
-__font__    | Must point to a previously initialized font handle for more info look at font documentation
-Returns either `false(0)` on failure or `true(1)` on success.
+__ctx__     | Must point to an either stack or heap allocated `nk_context` struct<br />必须指向栈或堆分配的 nk_context 结构
+__alloc__   | Must point to a previously allocated memory allocator<br />必须指向先前分配的内存分配器
+__font__    | Must point to a previously initialized font handle for more info look at font documentation<br />必须指向先前初始化的字体句柄，有关更多信息，请查看字体文档
+Returns either `false(0)` on failure or `true(1)` on success.<br />失败时返回 false(0)，成功时返回 true(1)。
+
 #### nk_init_custom
 Initializes a `nk_context` struct from two different either fixed or growing
 buffers. The first buffer is for allocating draw commands while the second buffer is
