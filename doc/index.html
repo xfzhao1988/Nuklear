@@ -336,14 +336,17 @@ __nk_set_user_data__| Utility function to pass user data to draw command<br />�
 #### nk_init_default
 Initializes a `nk_context` struct with a default standard library allocator.
 Should be used if you don't want to be bothered with memory management in nuklear.
+使用默认标准库分配器初始化 nk_context 结构。
+如果您不想在 nuklear 中被内存管理所困扰，则可以使用它。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 nk_bool nk_init_default(struct nk_context *ctx, const struct nk_user_font *font);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|---------------------------------------------------------------
-__ctx__     | Must point to an either stack or heap allocated `nk_context` struct
-__font__    | Must point to a previously initialized font handle for more info look at font documentation
-Returns either `false(0)` on failure or `true(1)` on success.
+__ctx__     | Must point to an either stack or heap allocated `nk_context` struct<br />必须指向栈或堆分配的 nk_context 结构
+__font__    | Must point to a previously initialized font handle for more info look at font documentation<br />必须指向先前初始化的字体句柄，有关更多信息，请查看字体文档
+Returns either `false(0)` on failure or `true(1)` on success.<br />失败时返回 false(0)，成功时返回 true(1)。
+
 #### nk_init_fixed
 Initializes a `nk_context` struct from single fixed size memory block
 Should be used if you want complete control over nuklear's memory management.
