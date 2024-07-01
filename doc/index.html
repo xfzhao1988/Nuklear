@@ -199,13 +199,14 @@ NK_BUTTON_TRIGGER_ON_RELEASE    | Different platforms require button clicks occu
 NK_ZERO_COMMAND_MEMORY          | Defining this will zero out memory for each drawing command added to a drawing queue (inside nk_command_buffer_push). Zeroing command memory is very useful for fast checking (using memcmp) if command buffers are equal and avoid drawing frames when nothing on screen has changed since previous frame.<br />定义此项将清零添加到绘制队列(nk_command_buffer_push 内)的每个绘制命令的内存。清零命令内存对于快速检查(使用 memcmp)命令缓冲区是否相等非常有用，并且可以避免在屏幕上自上一帧以来没有任何变化时绘制帧。
 NK_UINT_DRAW_INDEX              | Defining this will set the size of vertex index elements when using NK_VERTEX_BUFFER_OUTPUT to 32bit instead of the default of 16bit<br />定义此项将使用 NK_VERTEX_BUFFER_OUTPUT 时将顶点索引元素的大小设置为 32 位，而不是默认的 16 位
 NK_KEYSTATE_BASED_INPUT         | Define this if your backend uses key state for each frame rather than key press/release events<br />如果后端对每一帧都使用按键状态而不是按键按下/释放事件，则定义此项
-!!! WARNING
-    The following flags will pull in the standard C library:
+
+!!! WARNING 警告
+    The following flags will pull in the standard C library: 以下标志将引入标准 C 库：
     - NK_INCLUDE_DEFAULT_ALLOCATOR
     - NK_INCLUDE_STANDARD_IO
     - NK_INCLUDE_STANDARD_VARARGS
-!!! WARNING
-    The following flags if defined need to be defined for both header and implementation:
+!!! WARNING 警告
+    The following flags if defined need to be defined for both header and implementation: 如果定义了以下标志，则需要为标头和实现定义它们：
     - NK_INCLUDE_FIXED_TYPES
     - NK_INCLUDE_DEFAULT_ALLOCATOR
     - NK_INCLUDE_STANDARD_VARARGS
@@ -216,37 +217,42 @@ NK_KEYSTATE_BASED_INPUT         | Define this if your backend uses key state for
     - NK_INCLUDE_STANDARD_VARARGS
     - NK_INCLUDE_COMMAND_USERDATA
     - NK_UINT_DRAW_INDEX
-### Constants
+
+### Constants 常量
 Define                          | Description
 --------------------------------|---------------------------------------
-NK_BUFFER_DEFAULT_INITIAL_SIZE  | Initial buffer size allocated by all buffers while using the default allocator functions included by defining NK_INCLUDE_DEFAULT_ALLOCATOR. If you don't want to allocate the default 4k memory then redefine it.
-NK_MAX_NUMBER_BUFFER            | Maximum buffer size for the conversion buffer between float and string Under normal circumstances this should be more than sufficient.
-NK_INPUT_MAX                    | Defines the max number of bytes which can be added as text input in one frame. Under normal circumstances this should be more than sufficient.
-!!! WARNING
-    The following constants if defined need to be defined for both header and implementation:
+NK_BUFFER_DEFAULT_INITIAL_SIZE  | Initial buffer size allocated by all buffers while using the default allocator functions included by defining NK_INCLUDE_DEFAULT_ALLOCATOR. If you don't want to allocate the default 4k memory then redefine it.<br />使用通过定义 NK_INCLUDE_DEFAULT_ALLOCATOR 包含的默认分配器函数时，所有缓冲区分配的初始缓冲区大小。如果您不想分配默认的 4k 内存，请重新定义它。
+NK_MAX_NUMBER_BUFFER            | Maximum buffer size for the conversion buffer between float and string Under normal circumstances this should be more than sufficient.<br />浮点数和字符串之间的转换缓冲区的最大缓冲区大小在正常情况下应该足够了。
+NK_INPUT_MAX                    | Defines the max number of bytes which can be added as text input in one frame. Under normal circumstances this should be more than sufficient.<br />定义一帧中可以添加为文本输入的最大字节数。在正常情况下，这应该足够了。
+!!! WARNING 警告
+    The following constants if defined need to be defined for both header and implementation:如果定义了以下常量，则需要为标题和实现定义它们：
     - NK_MAX_NUMBER_BUFFER
     - NK_BUFFER_DEFAULT_INITIAL_SIZE
     - NK_INPUT_MAX
-### Dependencies
+
+### Dependencies 依赖
 Function    | Description
 ------------|---------------------------------------------------------------
-NK_ASSERT   | If you don't define this, nuklear will use <assert.h> with assert().
-NK_MEMSET   | You can define this to 'memset' or your own memset implementation replacement. If not nuklear will use its own version.
-NK_MEMCPY   | You can define this to 'memcpy' or your own memcpy implementation replacement. If not nuklear will use its own version.
-NK_INV_SQRT | You can define this to your own inverse sqrt implementation replacement. If not nuklear will use its own slow and not highly accurate version.
-NK_SIN      | You can define this to 'sinf' or your own sine implementation replacement. If not nuklear will use its own approximation implementation.
-NK_COS      | You can define this to 'cosf' or your own cosine implementation replacement. If not nuklear will use its own approximation implementation.
-NK_STRTOD   | You can define this to `strtod` or your own string to double conversion implementation replacement. If not defined nuklear will use its own imprecise and possibly unsafe version (does not handle nan or infinity!).
-NK_DTOA     | You can define this to `dtoa` or your own double to string conversion implementation replacement. If not defined nuklear will use its own imprecise and possibly unsafe version (does not handle nan or infinity!).
-NK_VSNPRINTF| If you define `NK_INCLUDE_STANDARD_VARARGS` as well as `NK_INCLUDE_STANDARD_IO` and want to be safe define this to `vsnprintf` on compilers supporting later versions of C or C++. By default nuklear will check for your stdlib version in C as well as compiler version in C++. if `vsnprintf` is available it will define it to `vsnprintf` directly. If not defined and if you have older versions of C or C++ it will be defined to `vsprintf` which is unsafe.
-!!! WARNING
+NK_ASSERT   | If you don't define this, nuklear will use <assert.h> with assert().<br />如果你不定义这个, nuklear 将使用带有 assert() 的 <assert.h>。
+NK_MEMSET   | You can define this to 'memset' or your own memset implementation replacement. If not nuklear will use its own version.<br />您可以将其定义为“memset”或您自己的 memset 实现替换。如果不是，则 nuclear 将使用其自己的版本。
+NK_MEMCPY   | You can define this to 'memcpy' or your own memcpy implementation replacement. If not nuklear will use its own version.<br />您可以将其定义为“memcpy”或您自己的 memcpy 实现替换。如果不是，则 nuclear 将使用其自己的版本。
+NK_INV_SQRT | You can define this to your own inverse sqrt implementation replacement. If not nuklear will use its own slow and not highly accurate version.<br />您可以将其定义为您自己的逆平方根实现替换。如果不是, nuclear将使用其自己的速度慢且精度不高的版本。
+NK_SIN      | You can define this to 'sinf' or your own sine implementation replacement. If not nuklear will use its own approximation implementation.<br />您可以将其定义为“sinf”或您自己的正弦实现替换。如果不是, nuclear将使用其自己的近似实现。
+NK_COS      | You can define this to 'cosf' or your own cosine implementation replacement. If not nuklear will use its own approximation implementation.<br />您可以将其定义为“cosf”或您自己的余弦实现替换。如果不是, 则 nuclear 将使用其自己的近似实现。
+NK_STRTOD   | You can define this to `strtod` or your own string to double conversion implementation replacement. If not defined nuklear will use its own imprecise and possibly unsafe version (does not handle nan or infinity!).<br />您可以将其定义为 strtod 或您自己的字符串到双精度转换实现替换。如果未定义，则 nuklear 将使用其自己的不精确且可能不安全的版本（不处理 nan 或无穷大！）。
+NK_DTOA     | You can define this to `dtoa` or your own double to string conversion implementation replacement. If not defined nuklear will use its own imprecise and possibly unsafe version (does not handle nan or infinity!).<br />您可以将其定义为 dtoa 或您自己的 double 到字符串转换实现替换。如果未定义，则 nuklear 将使用其自己的不精确且可能不安全的版本（不处理 nan 或无穷大！）。
+NK_VSNPRINTF| If you define `NK_INCLUDE_STANDARD_VARARGS` as well as `NK_INCLUDE_STANDARD_IO` and want to be safe define this to `vsnprintf` on compilers supporting later versions of C or C++. By default nuklear will check for your stdlib version in C as well as compiler version in C++. if `vsnprintf` is available it will define it to `vsnprintf` directly. If not defined and if you have older versions of C or C++ it will be defined to `vsprintf` which is unsafe.<br />如果您定义了 NK_INCLUDE_STANDARD_VARARGS 以及 NK_INCLUDE_STANDARD_IO 并且希望在支持更高版本的 C 或 C++ 的编译器上安全地将其定义为 vsnprintf。默认情况下,nuklear 将检查您的 C 中的 stdlib 版本以及 C++ 中的编译器版本。如果 vsnprintf 可用，它将直接将其定义为 vsnprintf。如果没有定义,并且您有旧版本的 C 或 C++，它将被定义为 vsprintf,这是不安全的。
+!!! WARNING 警告
     The following dependencies will pull in the standard C library if not redefined:
+    如果没有重新定义，以下依赖项将引入标准 C 库：
     - NK_ASSERT
 !!! WARNING
     The following dependencies if defined need to be defined for both header and implementation:
+    如果定义了以下依赖项，则需要为标头和实现定义：
     - NK_ASSERT
 !!! WARNING
     The following dependencies if defined need to be defined only for the implementation part:
+    如果定义了以下依赖项，则仅需要为实现部分定义：
     - NK_MEMSET
     - NK_MEMCPY
     - NK_SQRT
@@ -255,7 +261,8 @@ NK_VSNPRINTF| If you define `NK_INCLUDE_STANDARD_VARARGS` as well as `NK_INCLUDE
     - NK_STRTOD
     - NK_DTOA
     - NK_VSNPRINTF
-## Example
+
+## Example 实例
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 // init gui state
 enum {EASY, HARD};
@@ -288,17 +295,23 @@ if (nk_begin(&ctx, "Show", nk_rect(50, 50, 220, 220),
 nk_end(&ctx);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ![](https://cloud.githubusercontent.com/assets/8057201/10187981/584ecd68-675c-11e5-897c-822ef534a876.png)
+
 ## API
-### Context
+### Context 上下文
 Contexts are the main entry point and the majestro of nuklear and contain all required state.
 They are used for window, memory, input, style, stack, commands and time management and need
 to be passed into all nuklear GUI specific functions.
-#### Usage
+上下文是 nuklear 的主要入口点和主干，包含所有必需的状态。它们用于窗口、内存、输入、样式、堆栈、命令和时间管理，
+需要传递到所有 nuklear GUI 特定函数中。
+
+#### Usage 使用
 To use a context it first has to be initialized which can be achieved by calling
 one of either `nk_init_default`, `nk_init_fixed`, `nk_init`, `nk_init_custom`.
 Each takes in a font handle and a specific way of handling memory. Memory control
 hereby ranges from standard library to just specifying a fixed sized block of memory
 which nuklear has to manage itself from.
+要使用上下文，首先必须对其进行初始化，这可以通过调用 `nk_init_default`、`nk_init_fixed`、`nk_init`、`nk_init_custom`
+之一来实现。每个方法都采用字体句柄和处理内存的特定方式。内存控制范围从标准库到仅指定固定大小的内存块,nuklear必须从中管理自身。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 struct nk_context ctx;
 nk_init_xxx(&ctx, ...);
@@ -308,16 +321,18 @@ while (1) {
 }
 nk_free(&ctx);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#### Reference
+
+#### Reference 引用
 Function            | Description
 --------------------|-------------------------------------------------------
-__nk_init_default__ | Initializes context with standard library memory allocation (malloc,free)
-__nk_init_fixed__   | Initializes context from single fixed size memory block
-__nk_init__         | Initializes context with memory allocator callbacks for alloc and free
-__nk_init_custom__  | Initializes context from two buffers. One for draw commands the other for window/panel/table allocations
-__nk_clear__        | Called at the end of the frame to reset and prepare the context for the next frame
-__nk_free__         | Shutdown and free all memory allocated inside the context
-__nk_set_user_data__| Utility function to pass user data to draw command
+__nk_init_default__ | Initializes context with standard library memory allocation (malloc,free)<br />使用标准库内存分配(malloc、free)初始化上下文
+__nk_init_fixed__   | Initializes context from single fixed size memory block<br />从单个固定大小的内存块初始化上下文
+__nk_init__         | Initializes context with memory allocator callbacks for alloc and free<br />使用内存分配器回调函数(用于 alloc 和 free)初始化上下文
+__nk_init_custom__  | Initializes context from two buffers. One for draw commands the other for window/panel/table allocations<br />从两个缓冲区初始化上下文。一个用于绘制命令，另一个用于窗口/面板/表分配
+__nk_clear__        | Called at the end of the frame to reset and prepare the context for the next frame<br />在帧结束时调用，重置并为下一帧准备上下文
+__nk_free__         | Shutdown and free all memory allocated inside the context<br />关闭并释放上下文中分配的所有内存
+__nk_set_user_data__| Utility function to pass user data to draw command<br />将用户数据传递给绘图命令的实用函数
+
 #### nk_init_default
 Initializes a `nk_context` struct with a default standard library allocator.
 Should be used if you don't want to be bothered with memory management in nuklear.
