@@ -71,7 +71,7 @@ render backends it only focuses on the actual UI.
 - Focus on portability, efficiency and simplicity
   专注于便携性、效率和简单性
 - No dependencies (not even the standard library if not wanted)
-  没有依赖项(如果不需要, 甚至依赖标准库)
+  没有依赖项(如果不需要, 甚至不依赖标准库)
 - Fully skinnable and customizable
   完全可换肤和可定制
 - Low memory footprint with total memory control if needed or wanted
@@ -117,31 +117,55 @@ ChatGPT
 而顶点缓冲区输出通过优化数据传输和处理提高渲染速度。
 */
 
-## Features
+## Features 功能/特点
 - Absolutely no platform dependent code
+  绝对没有平台依赖代码
 - Memory management control ranging from/to
+  内存管理控制范围从/到
     - Ease of use by allocating everything from standard library
+      通过从标准库分配所有内容来简化使用
     - Control every byte of memory inside the library
+      控制库内部的每个内存字节
 - Font handling control ranging from/to
+  字体处理控制范围从/到
     - Use your own font implementation for everything
+      为所有内容使用您自己的字体实现
     - Use this libraries internal font baking and handling API
+      使用这个库内部字体烘焙和处理API
 - Drawing output control ranging from/to
+  绘图输出控制范围从/到
     - Simple shapes for more high level APIs which already have drawing capabilities
+      已经具有绘图功能的更高级API的简单形状
     - Hardware accessible anti-aliased vertex buffer output
+      硬件可访问的抗锯齿顶点缓冲区输出
 - Customizable colors and properties ranging from/to
+  可定制的颜色和属性范围从/到
     - Simple changes to color by filling a simple color table
+      通过填充简单的颜色表对颜色进行简单的更改
     - Complete control with ability to use skinning to decorate widgets
+      完成控件，具备使用换肤装饰小组件的能力
 - Bendable UI library with widget ranging from/to
+  可弯曲的UI库, 小部件范围从/到
     - Basic widgets like buttons, checkboxes, slider, ...
+      基本小部件，如按钮、复选框、滑块…
     - Advanced widget like abstract comboboxes, contextual menus,...
+      高级小部件，如抽象组合框、上下文菜单…
 - Compile time configuration to only compile what you need
+  编译时间可配置通过只编译自己需要的
     - Subset which can be used if you do not want to link or use the standard library
+      如果不想链接或使用标准库，可以使用子集
 - Can be easily modified to only update on user input instead of frame updates
-## Usage
+  可以轻松修改为仅在用户输入时更新而不是帧更新
+
+## Usage 使用
 This library is self contained in one single header file and can be used either
 in header only mode or in implementation mode. The header only mode is used
 by default when included and allows including this header in other headers
-and does not contain the actual implementation. <br /><br />
+and does not contain the actual implementation. <br />
+此库包含在一个单独的头文件中，可在仅头文件模式或实现模式下使用。仅头文件模式在包含时默认使用，
+允许将此头文件包含在其他头文件中，但不包含实际实现。
+<br /><br />
+
 The implementation mode requires to define  the preprocessor macro
 NK_IMPLEMENTATION in *one* .c/.cpp file before #including this file, e.g.:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~C
