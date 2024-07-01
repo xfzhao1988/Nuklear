@@ -167,7 +167,8 @@ and does not contain the actual implementation. <br />
 <br /><br />
 
 The implementation mode requires to define  the preprocessor macro
-NK_IMPLEMENTATION in *one* .c/.cpp file before #including this file, e.g.:
+NK_IMPLEMENTATION in *one* .c/.cpp file before #including this file, e.g.:<br />
+实现模式要求在 #include 此文件之前在一个 .c/.cpp 文件中定义预处理器宏 NK_IMPLEMENTATION, 例如:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~C
     #define NK_IMPLEMENTATION
     #include "nuklear.h"
@@ -176,11 +177,16 @@ Also optionally define the symbols listed in the section "OPTIONAL DEFINES"
 below in header and implementation mode if you want to use additional functionality
 or need more control over the library.
 !!! WARNING
-    Every time nuklear is included define the same compiler flags. This very important not doing so could lead to compiler errors or even worse stack corruptions.
-### Flags
+    Every time nuklear is included define the same compiler flags. This very important not doing
+    so could lead to compiler errors or even worse stack corruptions.
+<br />如果您想要使用附加功能或需要对库进行更多控制，还可以选择在标题和实现模式中定义下面“可选定义”部分中列出的符号。
+!!! 警告：每次包含 nuclear 时，定义相同的编译器标志。这非常重要，不这样做可能会导致编译器错误甚至更严重的堆栈损坏。
+
+### Flags 标志
 Flag                            | Description
 --------------------------------|------------------------------------------
 NK_PRIVATE                      | If defined declares all functions as static, so they can only be accessed inside the file that contains the implementation
+                                  如果定义所有函数都声明为静态的，那么它们只能在包含实现的文件内访问
 NK_INCLUDE_FIXED_TYPES          | If defined it will include header `<stdint.h>` for fixed sized types otherwise nuklear tries to select the correct type. If that fails it will throw a compiler error and you have to select the correct types yourself.
 NK_INCLUDE_DEFAULT_ALLOCATOR    | If defined it will include header `<stdlib.h>` and provide additional functions to use this library without caring for memory allocation control and therefore ease memory management.
 NK_INCLUDE_STANDARD_IO          | If defined it will include header `<stdio.h>` and provide additional functions depending on file loading.
