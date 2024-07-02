@@ -390,52 +390,64 @@ Returns either `false(0)` on failure or `true(1)` on success.<br />失败时返�
 Initializes a `nk_context` struct from two different either fixed or growing
 buffers. The first buffer is for allocating draw commands while the second buffer is
 used for allocating windows, panels and state tables.
+从两个不同的固定或增长缓冲区初始化 nk_context 结构。第一个缓冲区用于分配绘制命令，
+而第二个缓冲区用于分配窗口、面板和状态表。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 nk_bool nk_init_custom(struct nk_context *ctx, struct nk_buffer *cmds, struct nk_buffer *pool, const struct nk_user_font *font);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|---------------------------------------------------------------
-__ctx__     | Must point to an either stack or heap allocated `nk_context` struct
-__cmds__    | Must point to a previously initialized memory buffer either fixed or dynamic to store draw commands into
-__pool__    | Must point to a previously initialized memory buffer either fixed or dynamic to store windows, panels and tables
-__font__    | Must point to a previously initialized font handle for more info look at font documentation
-Returns either `false(0)` on failure or `true(1)` on success.
+__ctx__     | Must point to an either stack or heap allocated `nk_context` struct<br />必须指向栈或堆分配的 nk_context 结构
+__cmds__    | Must point to a previously initialized memory buffer either fixed or dynamic to store draw commands into<br />必须指向先前初始化的内存缓冲区（固定或动态），以将绘制命令存储到其中
+__pool__    | Must point to a previously initialized memory buffer either fixed or dynamic to store windows, panels and tables<br />必须指向先前初始化的内存缓冲区（固定或动态），用于存储窗口、面板和表
+__font__    | Must point to a previously initialized font handle for more info look at font documentation<br />必须指向先前初始化的字体句柄，有关更多信息，请查看字体文档
+Returns either `false(0)` on failure or `true(1)` on success.<br />失败时返回 false(0)，成功时返回 true(1)。
+
 #### nk_clear
 Resets the context state at the end of the frame. This includes mostly
 garbage collector tasks like removing windows or table not called and therefore
 used anymore.
+在帧结束时重置上下文状态。这主要包括垃圾收集器任务，例如删除不再调用的窗口或表。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_clear(struct nk_context *ctx);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的 nk_context 结构
+
 #### nk_free
 Frees all memory allocated by nuklear. Not needed if context was
 initialized with `nk_init_fixed`.
+释放由 nuklear 分配的所有内存。如果上下文使用 `nk_init_fixed` 初始化，则不需要。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_free(struct nk_context *ctx);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的 nk_context 结构
+
 #### nk_set_user_data
 Sets the currently passed userdata passed down into each draw command.
+设置当前传递到每个绘制命令的用户数据。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_set_user_data(struct nk_context *ctx, nk_handle data);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|--------------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
-__data__    | Handle with either pointer or index to be passed into every draw commands
-### Input
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的 nk_context 结构
+__data__    | Handle with either pointer or index to be passed into every draw commands<br />使用指针或索引来处理传递到每个绘制命令
+
+### Input 输入
 The input API is responsible for holding the current input state composed of
 mouse, key and text input states.
+输入 API 负责保存由鼠标、按键和文本输入状态组成的当前输入状态。
 It is worth noting that no direct OS or window handling is done in nuklear.
 Instead all input state has to be provided by platform specific code. This on one hand
 expects more work from the user and complicates usage but on the other hand
 provides simple abstraction over a big number of platforms, libraries and other
 already provided functionality.
+值得注意的是, 没有直接的操作系统或窗口处理是在nuklear中进行的。相反, 所有输入状态都必须由平台特定的代码提供。
+一方面，这需要用户做更多的工作并使使用变得复杂，但另一方面，它为大量平台、库和其他已提供的功能提供了简单的抽象。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 nk_input_begin(&ctx);
 while (GetEvent(&evt)) {
@@ -446,7 +458,8 @@ while (GetEvent(&evt)) {
     }
 } nk_input_end(&ctx);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#### Usage
+
+#### Usage 使用
 Input state needs to be provided to nuklear by first calling `nk_input_begin`
 which resets internal state like delta mouse position and button transitions.
 After `nk_input_begin` all current input state needs to be provided. This includes
@@ -454,6 +467,10 @@ mouse motion, button and key pressed and released, text input and scrolling.
 Both event- or state-based input handling are supported by this API
 and should work without problems. Finally after all input state has been
 mirrored `nk_input_end` needs to be called to finish input process.
+需要先调用 nk_input_begin 来向 nuklear 提供输入状态, 这会重置内部状态, 如鼠标位置增量和按钮转换。
+nk_input_begin 之后，需要提供所有当前输入状态。这包括鼠标移动、按下和释放按钮和键、文本输入和滚动。
+此 API 支持基于事件或状态的输入处理，并且应该可以正常工作。最后，在所有输入状态都已镜像后，
+需要调用 nk_input_end 来完成输入过程。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 struct nk_context ctx;
 nk_init_xxx(&ctx, ...);
@@ -472,59 +489,69 @@ while (1) {
     nk_clear(&ctx);
 } nk_free(&ctx);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#### Reference
+
+#### Reference 引用
 Function            | Description
 --------------------|-------------------------------------------------------
-__nk_input_begin__  | Begins the input mirroring process. Needs to be called before all other `nk_input_xxx` calls
-__nk_input_motion__ | Mirrors mouse cursor position
-__nk_input_key__    | Mirrors key state with either pressed or released
-__nk_input_button__ | Mirrors mouse button state with either pressed or released
-__nk_input_scroll__ | Mirrors mouse scroll values
-__nk_input_char__   | Adds a single ASCII text character into an internal text buffer
-__nk_input_glyph__  | Adds a single multi-byte UTF-8 character into an internal text buffer
-__nk_input_unicode__| Adds a single unicode rune into an internal text buffer
-__nk_input_end__    | Ends the input mirroring process by calculating state changes. Don't call any `nk_input_xxx` function referenced above after this call
+__nk_input_begin__  | Begins the input mirroring process. Needs to be called before all other `nk_input_xxx` calls<br />开始输入镜像过程。需要在所有其他 nk_input_xxx 调用之前调用
+__nk_input_motion__ | Mirrors mouse cursor position<br />镜像鼠标光标位置
+__nk_input_key__    | Mirrors key state with either pressed or released<br />镜像按下或释放的按键状态
+__nk_input_button__ | Mirrors mouse button state with either pressed or released<br />镜像鼠标按钮按下或释放的状态
+__nk_input_scroll__ | Mirrors mouse scroll values<br />镜像鼠标滚动值
+__nk_input_char__   | Adds a single ASCII text character into an internal text buffer<br />将单个 ASCII 文本字符添加到内部文本缓冲区
+__nk_input_glyph__  | Adds a single multi-byte UTF-8 character into an internal text buffer<br />将单个多字节 UTF-8 字符添加到内部文本缓冲区
+__nk_input_unicode__| Adds a single unicode rune into an internal text buffer<br />将单个 Unicode 符文添加到内部文本缓冲区
+__nk_input_end__    | Ends the input mirroring process by calculating state changes. Don't call any `nk_input_xxx` function referenced above after this call<br />通过计算状态变化来结束输入镜像过程。在此调用之后，不要调用上面引用的任何 nk_input_xxx 函数
+
 #### nk_input_begin
 Begins the input mirroring process by resetting text, scroll
 mouse, previous mouse position and movement as well as key state transitions,
+通过重置文本、滚动鼠标、先前的鼠标位置和移动以及按键状态转换来开始输入镜像过程，
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_input_begin(struct nk_context*);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的nk_context 结构
+
 #### nk_input_motion
 Mirrors current mouse position to nuklear
+将当前鼠标位置镜像到nuklear
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_input_motion(struct nk_context *ctx, int x, int y);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
-__x__       | Must hold an integer describing the current mouse cursor x-position
-__y__       | Must hold an integer describing the current mouse cursor y-position
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的nk_context 结构
+__x__       | Must hold an integer describing the current mouse cursor x-position<br />必须保存一个描述当前鼠标光标 x 位置的整数
+__y__       | Must hold an integer describing the current mouse cursor y-position<br />必须保存一个描述当前鼠标光标 y 位置的整数
+
 #### nk_input_key
 Mirrors the state of a specific key to nuklear
+镜像特定键的状态到nuklear
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_input_key(struct nk_context*, enum nk_keys key, nk_bool down);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
-__key__     | Must be any value specified in enum `nk_keys` that needs to be mirrored
-__down__    | Must be 0 for key is up and 1 for key is down
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的nk_context 结构
+__key__     | Must be any value specified in enum `nk_keys` that needs to be mirrored<br />必须是枚举 nk_keys 中指定的需要镜像的任意值
+__down__    | Must be 0 for key is up and 1 for key is down<br />必须为 0 表示按键向上, 1 表示按键向下
+
 #### nk_input_button
 Mirrors the state of a specific mouse button to nuklear
+将特定鼠标按钮的状态镜像到nuklear
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_input_button(struct nk_context *ctx, enum nk_buttons btn, int x, int y, nk_bool down);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
-__btn__     | Must be any value specified in enum `nk_buttons` that needs to be mirrored
-__x__       | Must contain an integer describing mouse cursor x-position on click up/down
-__y__       | Must contain an integer describing mouse cursor y-position on click up/down
-__down__    | Must be 0 for key is up and 1 for key is down
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的nk_context 结构
+__btn__     | Must be any value specified in enum `nk_buttons` that needs to be mirrored<br />必须是枚举 nk_buttons 中指定的需要镜像的任意值
+__x__       | Must contain an integer describing mouse cursor x-position on click up/down<br />必须包含一个整数，描述单击上/下时鼠标光标的 x 位置
+__y__       | Must contain an integer describing mouse cursor y-position on click up/down<br />必须包含一个整数，描述鼠标光标在单击上/下时的 y 位置
+__down__    | Must be 0 for key is up and 1 for key is down<br />必须为 0 表示按键向上, 1 表示按键向下
+
 #### nk_input_scroll
 Copies the last mouse scroll value to nuklear. Is generally
 a scroll value. So does not have to come from mouse and could also originate
@@ -534,8 +561,9 @@ void nk_input_scroll(struct nk_context *ctx, struct nk_vec2 val);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
-__val__     | vector with both X- as well as Y-scroll value
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />
+__val__     | vector with both X- as well as Y-scroll value<br />
+
 #### nk_input_char
 Copies a single ASCII character into an internal text buffer
 This is basically a helper function to quickly push ASCII characters into
@@ -547,8 +575,9 @@ void nk_input_char(struct nk_context *ctx, char c);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
-__c__       | Must be a single ASCII character preferable one that can be printed
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />
+__c__       | Must be a single ASCII character preferable one that can be printed<br />
+
 #### nk_input_glyph
 Converts an encoded unicode rune into UTF-8 and copies the result into an
 internal text buffer.
@@ -559,8 +588,9 @@ void nk_input_glyph(struct nk_context *ctx, const nk_glyph g);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
-__g__       | UTF-32 unicode codepoint
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />
+__g__       | UTF-32 unicode codepoint<br />
+
 #### nk_input_unicode
 Converts a unicode rune into UTF-8 and copies the result
 into an internal text buffer.
@@ -571,8 +601,9 @@ void nk_input_unicode(struct nk_context*, nk_rune rune);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
-__rune__    | UTF-32 unicode codepoint
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />
+__rune__    | UTF-32 unicode codepoint<br />
+
 #### nk_input_end
 End the input mirroring process by resetting mouse grabbing
 state to ensure the mouse cursor is not grabbed indefinitely.
@@ -581,7 +612,8 @@ void nk_input_end(struct nk_context *ctx);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />
+
 ### Drawing
 This library was designed to be render backend agnostic so it does
 not draw anything to screen directly. Instead all drawn shapes, widgets

@@ -788,11 +788,11 @@ enum nk_keys {
     NK_KEY_MAX
 };
 enum nk_buttons {
-    NK_BUTTON_LEFT,
-    NK_BUTTON_MIDDLE,
-    NK_BUTTON_RIGHT,
-    NK_BUTTON_DOUBLE,
-    NK_BUTTON_MAX
+    NK_BUTTON_LEFT, //表示鼠标左键。
+    NK_BUTTON_MIDDLE, //表示鼠标中键（通常是滚轮按下）。
+    NK_BUTTON_RIGHT, //表示鼠标右键。
+    NK_BUTTON_DOUBLE, //表示鼠标双击。
+    NK_BUTTON_MAX //表示按钮的最大值，用于界定按钮数量的范围，不作为实际按钮使用。
 };
 /*/// #### nk_input_begin
 /// Begins the input mirroring process by resetting text, scroll
@@ -4222,22 +4222,31 @@ struct nk_memory {void *ptr;nk_size size;};
 struct nk_buffer {
     struct nk_buffer_marker marker[NK_BUFFER_MAX];
     /* buffer marker to free a buffer to a certain offset */
+    /* 缓冲区标记，用于将缓冲区释放到特定偏移量 */
     struct nk_allocator pool;
     /* allocator callback for dynamic buffers */
+    /* 动态缓冲区的分配器回调 */
     enum nk_allocation_type type;
     /* memory management type */
+    /* 内存管理类型 */
     struct nk_memory memory;
     /* memory and size of the current memory block */
+    /* 内存和当前内存块的大小 */
     float grow_factor;
     /* growing factor for dynamic memory management */
+    /* 动态内存管理的增长因子 */
     nk_size allocated;
     /* total amount of memory allocated */
+    /* 分配的内存总量 */
     nk_size needed;
     /* totally consumed memory given that enough memory is present */
+    /* 在内存足够的情况下，总共消耗的内存 */
     nk_size calls;
     /* number of allocation calls */
+    /* 分配调用次数 */
     nk_size size;
     /* current size of the buffer */
+    /* 缓冲区的当前大小 */
 };
 
 #ifdef NK_INCLUDE_DEFAULT_ALLOCATOR
