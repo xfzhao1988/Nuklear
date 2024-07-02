@@ -556,80 +556,99 @@ __down__    | Must be 0 for key is up and 1 for key is down<br />必须为 0 表
 Copies the last mouse scroll value to nuklear. Is generally
 a scroll value. So does not have to come from mouse and could also originate
 TODO finish this sentence
+将最后一个鼠标滚动值复制到 nuclear。一般是滚动值。所以不一定来自鼠标,
+也可以来自 TODO 完成这句话
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_input_scroll(struct nk_context *ctx, struct nk_vec2 val);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct<br />
-__val__     | vector with both X- as well as Y-scroll value<br />
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的nk_context 结构
+__val__     | vector with both X- as well as Y-scroll value<br />具有 X 和 Y 滚动值的矢量
 
 #### nk_input_char
 Copies a single ASCII character into an internal text buffer
 This is basically a helper function to quickly push ASCII characters into
 nuklear.
-!!! Note
+将单个 ASCII 字符复制到内部文本缓冲区 这基本上是一个辅助函数，用于快速将 ASCII 字符推送到nuklear。
+!!! Note 注意
     Stores up to NK_INPUT_MAX bytes between `nk_input_begin` and `nk_input_end`.
+    在 nk_input_begin 和 nk_input_end 之间存储最多 NK_INPUT_MAX 字节。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_input_char(struct nk_context *ctx, char c);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct<br />
-__c__       | Must be a single ASCII character preferable one that can be printed<br />
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的nk_context 结构
+__c__       | Must be a single ASCII character preferable one that can be printed<br />必须是单个 ASCII 字符，最好是可以打印的
 
 #### nk_input_glyph
 Converts an encoded unicode rune into UTF-8 and copies the result into an
 internal text buffer.
-!!! Note
+将编码的 unicode 符文转换为 UTF-8, 并将结果复制到内部文本缓冲区。
+!!! Note 注意
     Stores up to NK_INPUT_MAX bytes between `nk_input_begin` and `nk_input_end`.
+    在 nk_input_begin 和 nk_input_end 之间存储最多 NK_INPUT_MAX 字节。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_input_glyph(struct nk_context *ctx, const nk_glyph g);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct<br />
-__g__       | UTF-32 unicode codepoint<br />
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的nk_context 结构
+__g__       | UTF-32 unicode codepoint<br />UTF-32 Unicode 代码点
 
 #### nk_input_unicode
 Converts a unicode rune into UTF-8 and copies the result
 into an internal text buffer.
-!!! Note
+将 unicode 符文转换为 UTF-8, 并将结果复制到内部文本缓冲区。
+!!! Note 注意
     Stores up to NK_INPUT_MAX bytes between `nk_input_begin` and `nk_input_end`.
+    在 nk_input_begin 和 nk_input_end 之间存储最多 NK_INPUT_MAX 字节。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_input_unicode(struct nk_context*, nk_rune rune);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct<br />
-__rune__    | UTF-32 unicode codepoint<br />
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的nk_context 结构
+__rune__    | UTF-32 unicode codepoint<br />UTF-32 Unicode 代码点
 
 #### nk_input_end
 End the input mirroring process by resetting mouse grabbing
 state to ensure the mouse cursor is not grabbed indefinitely.
+通过重置鼠标抓取状态来结束输入镜像过程，以确保鼠标光标不会被无限期地抓取。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 void nk_input_end(struct nk_context *ctx);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Parameter   | Description
 ------------|-----------------------------------------------------------
-__ctx__     | Must point to a previously initialized `nk_context` struct<br />
+__ctx__     | Must point to a previously initialized `nk_context` struct<br />必须指向先前初始化的nk_context 结构
 
-### Drawing
+### Drawing 绘图
 This library was designed to be render backend agnostic so it does
 not draw anything to screen directly. Instead all drawn shapes, widgets
 are made of, are buffered into memory and make up a command queue.
+这个库被设计为与渲染后端无关，因此它不会直接在屏幕上绘制任何东西。
+相反，所有绘制的形状、小部件都缓冲到内存中并组成命令队列。
 Each frame therefore fills the command buffer with draw commands
 that then need to be executed by the user and his own render backend.
+因此，每个帧都会用绘制命令填充命令缓冲区，然后用户及其自己的渲染后端需要执行这些命令。
 After that the command buffer needs to be cleared and a new frame can be
 started. It is probably important to note that the command buffer is the main
 drawing API and the optional vertex buffer API only takes this format and
 converts it into a hardware accessible format.
-#### Usage
+之后需要清除命令缓冲区，然后可以开始新的帧。可能需要注意的是，命令缓冲区是主要的绘制 API,
+而可选的顶点缓冲区 API 仅采用这种格式并将其转换为硬件可访问的格式。
+
+#### Usage 使用
 To draw all draw commands accumulated over a frame you need your own render
 backend able to draw a number of 2D primitives. This includes at least
 filled and stroked rectangles, circles, text, lines, triangles and scissors.
 As soon as this criterion is met you can iterate over each draw command
 and execute each draw command in a interpreter like fashion:
+要绘制一帧中累积的所有绘制命令，您需要自己的渲染后端能够绘制大量 2D 图元。
+这至少包括填充和描边矩形、圆形、文本、线条、三角形和剪刀。一旦满足此条件，您就可以迭代
+每个绘制命令并以类似解释器的方式执行每个绘制命令：
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 const struct nk_command *cmd = 0;
 nk_foreach(cmd, &ctx) {
@@ -649,6 +668,8 @@ In program flow context draw commands need to be executed after input has been
 gathered and the complete UI with windows and their contained widgets have
 been executed and before calling `nk_clear` which frees all previously
 allocated draw commands.
+在程序流上下文中，需要在收集输入、执行包含窗口及其所包含的小部件的完整 UI 之后，
+以及在调用 nk_clear(释放所有先前分配的绘制命令)之前执行绘制命令。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 struct nk_context ctx;
 nk_init_xxx(&ctx, ...);
@@ -685,12 +706,18 @@ nk_free(&ctx);
 You probably noticed that you have to draw all of the UI each frame which is
 quite wasteful. While the actual UI updating loop is quite fast rendering
 without actually needing it is not. So there are multiple things you could do.
+您可能注意到，您必须在每一帧绘制所有的 UI, 这非常浪费。虽然实际的 UI 更新循环非常快，
+但实际上并不需要渲染。因此，您可以做很多事情。
 First is only update on input. This of course is only an option if your
 application only depends on the UI and does not require any outside calculations.
 If you actually only update on input make sure to update the UI two times each
 frame and call `nk_clear` directly after the first pass and only draw in
 the second pass. In addition it is recommended to also add additional timers
 to make sure the UI is not drawn more than a fixed number of frames per second.
+第一种是仅在输入时更新。这当然只是一种选择，如果您的应用程序仅依赖于 UI
+并且不需要任何外部计算。如果您实际上只在输入时更新，请确保每帧更新 UI 两次，
+并在第一次传递后直接调用 nk_clear, 并仅在第二次传递中绘制。此外，建议还添加额外的计时器，
+以确保 UI 的绘制速度不超过每秒固定的帧数。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 struct nk_context ctx;
 nk_init_xxx(&ctx, ...);
@@ -728,6 +755,12 @@ with your allocated buffer by memcmp. If memcmp detects differences
 you have to copy the command buffer into the allocated buffer
 and then draw like usual (this example uses fixed memory but you could
 use dynamically allocated memory).
+第二个可能更适用的技巧是仅在发生任何变化时才绘制。对于具有连续绘制循环的应用程序来说，
+它并不是很有用，但对于桌面应用程序来说却非常有用。要真正让 nuclear 仅在变化时绘制，
+您首先必须定义 NK_ZERO_COMMAND_MEMORY 并分配一个内存缓冲区来存储每个唯一的绘制输出。
+在每一帧之后，您通过 memcmp 将库中的绘制命令内存与您分配的缓冲区进行比较。如果 memcmp 检测到差异，
+您必须将命令缓冲区复制到分配的缓冲区中，然后像往常一样绘制（此示例使用固定内存，但您可以使用
+动态分配的内存）。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 //[... other defines ...]
 #define NK_ZERO_COMMAND_MEMORY
@@ -772,6 +805,10 @@ To access the vertex output you first have to convert all draw commands into
 vertexes by calling `nk_convert` which takes in your preferred vertex format.
 After successfully converting all draw commands just iterate over and execute all
 vertex draw commands:
+最后，虽然使用绘制命令对于更高抽象的平台(如 X11 和 Win32)或绘制库来说是有意义的，但通常希望直接使用图形硬件。
+因此，可以只定义包含可选顶点输出的 NK_INCLUDE_VERTEX_BUFFER_OUTPUT。要访问顶点输出, 首先必须通过调用
+nk_convert 将所有绘制命令转换为顶点, nk_convert 采用您喜欢的顶点格式。成功转换所有绘制命令后，
+只需迭代并执行所有顶点绘制命令：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
 // fill configuration
 struct your_vertex
@@ -814,17 +851,19 @@ nk_buffer_free(&cms);
 nk_buffer_free(&verts);
 nk_buffer_free(&idx);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 #### Reference
 Function            | Description
 --------------------|-------------------------------------------------------
-__nk__begin__       | Returns the first draw command in the context draw command list to be drawn
-__nk__next__        | Increments the draw command iterator to the next command inside the context draw command list
-__nk_foreach__      | Iterates over each draw command inside the context draw command list
-__nk_convert__      | Converts from the abstract draw commands list into a hardware accessible vertex format
-__nk_draw_begin__   | Returns the first vertex command in the context vertex draw list to be executed
-__nk__draw_next__   | Increments the vertex command iterator to the next command inside the context vertex command list
-__nk__draw_end__    | Returns the end of the vertex draw list
-__nk_draw_foreach__ | Iterates over each vertex draw command inside the vertex draw list
+__nk__begin__       | Returns the first draw command in the context draw command list to be drawn<br />返回上下文绘制命令列表中第一个要绘制的绘制命令
+__nk__next__        | Increments the draw command iterator to the next command inside the context draw command list<br />将绘制命令迭代器增加到上下文绘制命令列表中的下一个命令
+__nk_foreach__      | Iterates over each draw command inside the context draw command list<br />迭代上下文绘制命令列表中的每个绘制命令
+__nk_convert__      | Converts from the abstract draw commands list into a hardware accessible vertex format<br />将抽象绘制命令列表转换为硬件可访问的顶点格式
+__nk_draw_begin__   | Returns the first vertex command in the context vertex draw list to be executed<br />返回上下文顶点绘制列表中要执行的第一个顶点命令
+__nk__draw_next__   | Increments the vertex command iterator to the next command inside the context vertex command list<br />将顶点命令迭代器增加到上下文顶点命令列表内的下一个命令
+__nk__draw_end__    | Returns the end of the vertex draw list<br />返回顶点绘制列表的末尾
+__nk_draw_foreach__ | Iterates over each vertex draw command inside the vertex draw list<br />迭代顶点绘制列表中的每个顶点绘制命令
+
 #### nk__begin
 Returns a draw command list iterator to iterate all draw
 commands accumulated over one frame.

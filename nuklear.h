@@ -1169,19 +1169,31 @@ enum nk_convert_result {
 };
 struct nk_draw_null_texture {
     nk_handle texture; /* texture handle to a texture with a white pixel */
-    struct nk_vec2 uv; /* coordinates to a white pixel in the texture  */
+                       /* 具有白色像素的纹理句柄 */
+    struct nk_vec2 uv; /* coordinates to a white pixel in the texture */
+                       /* 纹理中的白色像素的坐标 */
 };
 struct nk_convert_config {
     float global_alpha; /* global alpha value */
+                        /* 全局 alpha 值 */
     enum nk_anti_aliasing line_AA; /* line anti-aliasing flag can be turned off if you are tight on memory */
+                                   /* 如果内存紧张，可以关闭行抗锯齿标志 */
     enum nk_anti_aliasing shape_AA; /* shape anti-aliasing flag can be turned off if you are tight on memory */
+                                    /* 如果内存紧张，可以关闭形状抗锯齿标志 */
     unsigned circle_segment_count; /* number of segments used for circles: default to 22 */
+                                   /* 圆使用的段数：默认为 22 */
     unsigned arc_segment_count; /* number of segments used for arcs: default to 22 */
+                                /* 用于弧的段数：默认为 22 */
     unsigned curve_segment_count; /* number of segments used for curves: default to 22 */
+                                  /* 曲线使用的段数：默认为 22 */
     struct nk_draw_null_texture tex_null; /* handle to texture with a white pixel for shape drawing */
+                                          /* 用于形状绘制的带有白色像素的纹理句柄 */
     const struct nk_draw_vertex_layout_element *vertex_layout; /* describes the vertex output format and packing */
+                                                               /* 描述顶点输出格式和打包 */
     nk_size vertex_size; /* sizeof one vertex for vertex packing */
+                         /* 顶点打包时的一个顶点的大小 */
     nk_size vertex_alignment; /* vertex alignment: Can be obtained by NK_ALIGNOF */
+                              /* 顶点对齐：可以通过NK_ALIGNOF获取 */
 };
 /*/// #### nk__begin
 /// Returns a draw command list iterator to iterate all draw
@@ -4451,6 +4463,10 @@ NK_API void nk_textedit_redo(struct nk_text_edit*);
 /// started. It is probably important to note that the command buffer is the main
 /// drawing API and the optional vertex buffer API only takes this format and
 /// converts it into a hardware accessible format.
+这个库被设计为与渲染后端无关，因此它不会直接在屏幕上绘制任何东西。相反，所有绘制的形状、小部件都缓冲到内存中
+并组成命令队列。因此，每个帧都会用绘制命令填充命令缓冲区，然后用户及其自己的渲染后端需要执行这些命令。
+之后需要清除命令缓冲区，然后可以开始新的帧。可能需要注意的是，命令缓冲区是主要的绘制 API,
+而可选的顶点缓冲区 API 仅采用这种格式并将其转换为硬件可访问的格式。
 ///
 /// To use the command queue to draw your own widgets you can access the
 /// command buffer of each window by calling `nk_window_get_canvas` after
@@ -4511,6 +4527,7 @@ enum nk_command_type {
 };
 
 /* command base and header of every command inside the buffer */
+/* 缓冲区内每个命令的命令库和命令头 */
 struct nk_command {
     enum nk_command_type type;
     nk_size next;
